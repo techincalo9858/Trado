@@ -1,0 +1,11 @@
+<script src="trade/amc/core.js"></script>
+    <script src="trade/amc/charts.js"></script>
+    <script src="trade/amc/dark.html"></script>
+    <script src="trade/amc/animated.js"></script>
+    <script src="trade/js/jquery.js"></script>
+    <script src="trade/js/popper.min.js"></script>
+    <script src="trade/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="trade/bootstrap/js/bootstrap.js"></script>
+    <script src="trade/js/main.js"></script>
+    <script src="trade/js/amc.js"></script>
+    <script src="trade/js/tv.js"></script>

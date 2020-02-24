@@ -1,0 +1,143 @@
+ <div>
+                    <div class="crypt-market-status">
+                        <div>
+                            <ul class="nav nav-tabs">
+                                <li role="presentation"><a href="#active-orders" class="active" data-toggle="tab">Active Orders</a></li>
+                                <li role="presentation"><a href="#closed-orders" data-toggle="tab">Closed Orders</a></li>
+                                <li role="presentation"><a href="#balance" data-toggle="tab">Balance</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="active-orders">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Opened at</th>
+                                                <th scope="col">Buy/sell</th>
+                                                <th scope="col">Base price</th>
+                                                <th scope="col">Quote price</th>
+                                                <th scope="col">Asset</th>
+                                                <th scope="col">Now</th>
+                                                <th scope="col">Operation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($order->status=="active"): ?>
+                                            <tr>
+                                                <td><?php echo e($order->created_at); ?></td>
+                                                <td><?php echo e($order->type); ?></td>
+                                                <td><?php echo e($order->base_amount); ?> <?php echo e($order->base_c); ?></td>
+                                                <td><?php echo e($order->quote_amount); ?> <?php echo e($order->quote_c); ?></td>
+                                                <td><?php echo e($order->base_amount); ?> <?php echo e($order->base_c); ?></td>
+                                                <td><?php echo e($order->base_amount); ?></td>
+                                                <td><?php echo e($order->base_c); ?>/<?php echo e($order->quote_c); ?></td>
+                                                <td>
+                                                    <a href="javascript:void(0)" id="closeorder<?php echo e($order->id); ?>" class="btn btn-danger btn-sm">close</a>
+                                                </td>
+                                            </tr>
+                                            <?php endif; ?>
+
+                                            <script type="text/javascript">
+                                            $("#closeorder<?php echo e($order->id); ?>").on('click',function(){
+                                                    $.ajax({
+                                                        url: "<?php echo e(url('trade/closeorder')); ?>/<?php echo e($order->id); ?>",
+                                                        type: 'GET',
+                                                        data:$("#closeorder<?php echo e($order->id); ?>").serialize(),
+                                                        success: function (response) {
+                                                            if(response.status ===200){
+                                                                swal({
+                                                                icon: "success",
+                                                                text: response.message,
+                                                                timer:3000,
+                                                                });
+                                                                location.reload(true);
+                                                                }
+                                                                else{
+                                                                swal({
+                                                                icon: "error",
+                                                                text: response.message,
+                                                                timer:3000,
+                                                                });
+                                                                location.reload(true);
+                                                            }
+                                                        console.log(response)
+                                                        },
+                                                        error: function (data) {
+                                                            swal({
+                                                            icon: "error",
+                                                            text: "Something went wrong", 
+                                                            timer:3000,
+                                                            });
+                                                        },
+
+                                                    });
+                                                });
+                                            </script>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </tbody>
+                                    </table>
+                                    <!--<div class="no-orders text-center"><img src="images/empty.png" alt="no-orders"></div>-->
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="closed-orders">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Opened at</th>
+                                            <th scope="col">Closed at</th>
+                                                <th scope="col">Buy/sell</th>
+                                                <th scope="col">Base price</th>
+                                                <th scope="col">Quote price</th>
+                                                <th scope="col">Closed price</th>
+                                                <th scope="col">Asset</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($order->status=="closed"): ?>
+                                            <tr>
+                                                <td><?php echo e($order->created_at); ?></td>
+                                                <td><?php echo e($order->closed_at); ?></td>
+                                                <td><?php echo e($order->type); ?></td>
+                                                <td><?php echo e($order->base_amount); ?> <?php echo e($order->base_c); ?></td>
+                                                <td><?php echo e($order->quote_amount); ?> <?php echo e($order->quote_c); ?></td>
+                                                <td><?php echo e($order->closed_amount); ?> <?php echo e($order->base_c); ?></td>
+                                                <td><?php echo e($order->base_c); ?>/<?php echo e($order->quote_c); ?></td>
+                                            </tr>
+                                            <?php endif; ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="balance">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Currency</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Volume</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>BTC</th>
+                                                <td>0.0000564</td>
+                                                <td>6.6768876</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ETC</th>
+                                                <td>0.000056</td>
+                                                <td>5.3424984</td>
+                                            </tr>
+                                            <tr>
+                                                <th>LTC</th>
+                                                <td>0.0000234</td>
+                                                <td>4.3456600</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
