@@ -861,7 +861,7 @@ class Controller extends BaseController
 
     if($plan->type=='Main'){
       //debit user
-      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first()
+      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
       ->update([
      'balance'=>$balance-$plan_price,
     ]);
