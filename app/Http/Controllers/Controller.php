@@ -829,14 +829,14 @@ class Controller extends BaseController
     }
     //check if the user account balance can buy this plan
     $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
-    dd($balance);
-        // if(!$balance)
-        // {
-        //   $balance=0;
-        // }
-        // else {
-        //   $balance=$balance->balance;
-        // }
+    // dd($balance);
+        if(!$balance)
+        {
+          $balance=0;
+        }
+        else {
+          $balance=$balance->balance;
+        }
     if($user->account_bal < $plan_price){
         //redirect to make deposit
         // dd($balance);
