@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Mail\NewNotification;
+use App\Mail\htmlNotification;
+
 use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
@@ -411,7 +413,7 @@ class UsersController extends Controller
         $objDemo->subject ="Deposit deleted!";
         $objDemo->date = \Carbon\Carbon::Now();
         Mail::to($user->email)->send(new htmlNotification($objDemo));
-        
+
     return redirect()->back()
     ->with('message', 'Deposit history has been deleted!');
   }
