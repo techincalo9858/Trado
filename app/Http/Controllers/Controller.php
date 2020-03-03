@@ -205,7 +205,6 @@ class Controller extends BaseController
       	else{
       	   */
           $balance=$this->getBalance();
-          dd($balance);
         return view('dashboard')
         ->with(array(
         //'earnings'=>$earnings,
@@ -647,6 +646,7 @@ class Controller extends BaseController
     }
     public function getBalance(){
       $setting=settings::where('id','1')->first();
+      dd($setting);
       return balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
     }
 
