@@ -836,6 +836,8 @@ class Controller extends BaseController
         }
     if($balance < $plan_price){
         //redirect to make deposit
+        dd($balance);
+        dd($plan_price);
 
         return redirect()->route('deposits')
       ->with('message', 'Your account is insufficient to purchase this plan. Please make a deposit.');
