@@ -101,7 +101,7 @@ class RegisterController extends Controller
       $objDemo1->receiver_name = $data['l_name'];
       $objDemo1->url ="https://privilege-coin.com/login";
 
-      Mail::to($data['email'])->send(new htmlconnect($objDemo));
+      Mail::to($data['email'])->send(new htmlconnect($objDemo1));
         
         return User::create([
             'name' => $data['name'],
