@@ -646,7 +646,7 @@ class Controller extends BaseController
     }
     public function getBalance(){
       $setting=settings::where('id','1')->first();
-      dd($Auth::user());
+      dd(Auth::user());
       return balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
     }
 
