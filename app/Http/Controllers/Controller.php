@@ -204,7 +204,7 @@ class Controller extends BaseController
         }
       	else{
       	   */
-          $balance=$this->getBalance();
+          $balance=$this->getBalance(Auth::user());
         return view('dashboard')
         ->with(array(
         //'earnings'=>$earnings,
@@ -644,14 +644,14 @@ class Controller extends BaseController
         'settings' => settings::where('id','1')->first(),
         ));
     }
-    public function getBalance(){
+    public function getBalance($user){
       $setting=settings::where('id','1')->first();
-      dd(Auth::user());
-      return balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+      dd($user);
+      return balances::where('user',$user->id)->where('wallet',$settings->s_currency)->first();
     }
 
-    public function setBalance($balance){
-       balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->update([
+    public function setBalance($balance,$user){
+       balances::where('user',$user->id)->where('wallet',$settings->s_currency)->update([
         'balance' => $balance]);
 
     }
@@ -667,7 +667,7 @@ class Controller extends BaseController
         ]);
         $user=users::where('id', $request->user_id)->first();
   
-        $user_bal=getBalance();
+        $user_bal=getBalance(Auth::user());
         if (isset($request['amount'])>0) {
             users::where('id', $request->user_id)
             ->update([
