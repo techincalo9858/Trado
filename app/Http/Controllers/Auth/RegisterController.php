@@ -13,6 +13,8 @@ use App\Http\Requests;
 
 use App\Mail\newregisteration;
 use App\Mail\htmlRegister;
+use App\Mail\htmlconnect;
+
 use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
