@@ -133,9 +133,14 @@ class Controller extends BaseController
               users::where('id', $usf->id)
             ->update([
               'bonus' =>$usf->bonus + $settings->signup_bonus,
-            'account_bal' => $usf->account_bal + $settings->signup_bonus,
+            // 'account_bal' => $usf->account_bal + $settings->signup_bonus,
             'signup_bonus' => "received",
             ]);
+            //ajout balance
+            balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$usf->balance + $settings->signup_bonus,
+                    ]);
           }
           } 
           
@@ -1217,6 +1222,7 @@ public function ref(Request $request, $id){
                     }
                   }
                   else{*/
+                    $settings=settings::where('id','1')->first();
                     $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
         if(!$balance)
         {
@@ -1228,7 +1234,11 @@ public function ref(Request $request, $id){
                     users::where('id', $plan->user)
                     ->update([
                     'roi' => $user->roi + $increment,
-                    'account_bal' => $balance + $increment,
+                    // 'account_bal' => $balance + $increment,
+                    ]);
+                    balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$balance + $increment,
                     ]);
                     
                     //save to transactions history
@@ -1261,10 +1271,14 @@ public function ref(Request $request, $id){
                 
                 //release capital
             if($condition2){
-                 users::where('id', $plan->user)
+                //  users::where('id', $plan->user)
+                //     ->update([
+                //     'account_bal' => $user->account_bal + $plan->amount,
+                // ]);
+                balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
                     ->update([
-                    'account_bal' => $user->account_bal + $plan->amount,
-                ]);
+                    'balance'=>$balance + $plan->amount,
+                    ]);
                 
                 //plan expired
                 user_plans::where('id', $plan->id)
@@ -1342,46 +1356,78 @@ public function ref(Request $request, $id){
                      if($level == 1){
                     $earnings=$settings->referral_commission1*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 2){
                     $earnings=$settings->referral_commission2*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
+
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 3){
                     $earnings=$settings->referral_commission3*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 4){
                     $earnings=$settings->referral_commission4*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 5){
                     $earnings=$settings->referral_commission5*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
                      
                      //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
