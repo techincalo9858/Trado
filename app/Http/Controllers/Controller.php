@@ -837,9 +837,9 @@ class Controller extends BaseController
         else {
           $balance=$balance->balance;
         }
-    if($user->account_bal < $plan_price){
+    if($balance < $plan_price){
         //redirect to make deposit
-        // dd($balance);
+        dd($balance);
         // dd($plan_price);
 
         return redirect()->route('deposits')
