@@ -404,6 +404,8 @@ class UsersController extends Controller
   public function deldeposit(Request $request, $id){
     $deposit=deposits::where('id',$id)->first();
     $user=users::where('id',$deposit->user)->first();
+    $settings=settings::where('id', '=', '1')->first();
+
     
     
     $objDemo = new \stdClass();
