@@ -829,7 +829,7 @@ class Controller extends BaseController
     }
     //check if the user account balance can buy this plan
     $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
-    dd($balance);
+    // dd($balance);
         if(!$balance)
         {
           $balance=0;
