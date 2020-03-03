@@ -502,6 +502,16 @@ public function updateasst(Request $request){
             'bonus'=> $user_bonus + $request['amount'],
             'account_bal'=> $user_bal + $request->amount,
             ]);
+       $user=users::where('id',Auth::user()->id)->first();
+        $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
+        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR and your balance is now $user->account_bal";
+        $objDemo->sender = "$settings->site_name";
+        $objDemo->date = \Carbon\Carbon::Now();
+        $objDemo->subject = "Deposit processed!";
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
         }elseif ($request['type']=="Profit") {
           users::where('id', $request->user_id)
             ->update([
