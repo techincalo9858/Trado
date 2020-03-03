@@ -204,14 +204,15 @@ class Controller extends BaseController
         }
       	else{
       	   */
-         
+          $balance=$this->getBalance();
+          dd($balance);
         return view('dashboard')
         ->with(array(
         //'earnings'=>$earnings,
         'title'=>'User panel',
         'ref_earnings' => $ref_earnings,
         'deposited' => $total_deposited,
-        'balance' => $this->getBalance(),
+        'balance' => $balance,
         'total_bonus' => $total_bonus,
         'user_plan' => $user_plan,
         'user_plan_active'=> $user_plan_active,
