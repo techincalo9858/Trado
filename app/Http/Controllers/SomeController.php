@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Mail\NewNotification;
+use App\Mail\htmlNotification;
 use Illuminate\Support\Facades\Mail;
 
 use App\Http\Traits\CPTrait;
