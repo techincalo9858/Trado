@@ -204,7 +204,8 @@ class Controller extends BaseController
         }
       	else{
       	   */
-          $balance=$this->getBalance(Auth::user()->id);
+          
+          $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
         return view('dashboard')
         ->with(array(
         //'earnings'=>$earnings,
