@@ -503,7 +503,7 @@ public function updateasst(Request $request){
             'bonus'=> $user_bonus + $request['amount'],
             'account_bal'=> $user_bal + $request->amount,
             ]);
-        $credit_bonus=$user->account_bal + $request->amount
+        $credit_bonus=$user->account_bal + $request->amount;
         $objDemo = new \stdClass();
         $objDemo->receiver_name = "$user->name";
         $objDemo->url = "https://privilege-coin.com/";
