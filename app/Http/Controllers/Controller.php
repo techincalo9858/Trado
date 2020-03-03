@@ -809,6 +809,8 @@ class Controller extends BaseController
     $user=users::where('id',Auth::user()->id)->first();
     //get plan
     $plan=plans::where('id',$request['id'])->first();
+    $settings=settings::where('id','1')->first();
+
     
     if(isset($request['iamount']) && $request['iamount']>0){
         $plan_price=$request['iamount'];
@@ -975,6 +977,7 @@ class Controller extends BaseController
 
        //assign referal link to user
         $settings=settings::where('id', '=', '1')->first();
+
 
         users::where('id', $thisid)
           ->update([
