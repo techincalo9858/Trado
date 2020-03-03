@@ -485,7 +485,7 @@ class Controller extends BaseController
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject = "Deposit processed!";
             
-        Mail::to($data['email'])->send(new htmlNotification($objDemo));
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
 
 
 
@@ -559,14 +559,13 @@ class Controller extends BaseController
          //send email notification
         $objDemo = new \stdClass();
         $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency $deposit->amount has been received and confirmed.";
+        
         $objDemo->receiver_name = "$user->name";
         $objDemo->url = "https://privilege-coin.com/";
         $objDemo->sender = $settings->site_name;
-        $objDemo->subject ="Successful withdrawal";
+        $objDemo->subject ="Deposit processed!";
         $objDemo->date = \Carbon\Carbon::Now();
-      
-        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
-        Mail::to($data['email'])->send(new htmlNotification($objDemo));
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
 
         // $objDemo->sender = "$settings->site_name";
         // $objDemo->date = \Carbon\Carbon::Now();
@@ -614,7 +613,7 @@ class Controller extends BaseController
         $objDemo->date = \Carbon\Carbon::Now();
       
         // Mail::bcc($user->email)->send(new NewNotification($objDemo));
-        Mail::to($data['email'])->send(new htmlNotification($objDemo));
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
 
         
       return redirect()->back()
