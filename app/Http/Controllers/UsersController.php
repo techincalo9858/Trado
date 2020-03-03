@@ -403,6 +403,7 @@ class UsersController extends Controller
   //Delete deposit
   public function deldeposit(Request $request, $id){
     $user=users::where('id',$deposit->user)->first();
+    $deposit=deposits::where('id',$id)->first();
     deposits::where('id', $id)->delete();
     $objDemo = new \stdClass();
         $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency $deposit->amount has been refused and deleted. Please do a new deposit.";
