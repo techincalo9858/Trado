@@ -829,7 +829,7 @@ class Controller extends BaseController
     }
     //check if the user account balance can buy this plan
     $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
-    // dd($balance);
+    dd($balance);
         if(!$balance)
         {
           $balance=0;
@@ -839,14 +839,15 @@ class Controller extends BaseController
         }
     if($balance < $plan_price){
         //redirect to make deposit
-        dd($balance);
-        // dd($plan_price);
+        // dd($balance);
+        // // dd($plan_price);
 
         return redirect()->route('deposits')
       ->with('message', 'Your account is insufficient to purchase this plan. Please make a deposit.');
         
     }
     else{
+      
       $objDemo = new \stdClass();
             $objDemo->receiver_name = "$user->name";
             $objDemo->url = "https://privilege-coin.com/";
@@ -857,13 +858,20 @@ class Controller extends BaseController
             Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     
+
+    if($plan->type=='Main'){
+      //debit user
+      $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+      ->update([
+     'balance'=>$balance-$plan_price,
+    ]);
   
-      if($plan->type=='Main'){
-          //debit user
-          users::where('id', $user->id)
-          ->update([
-         'account_bal'=>$balance-$plan_price,
-        ]);
+      // if($plan->type=='Main'){
+      //     //debit user
+      //     users::where('id', $user->id)
+      //     ->update([
+      //    'account_bal'=>$balance-$plan_price,
+      //   ]);
         
           //save user plan
           $userplanid = DB::table('user_plans')->insertGetId(
