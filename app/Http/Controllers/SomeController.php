@@ -503,11 +503,11 @@ public function updateasst(Request $request){
             'bonus'=> $user_bonus + $request['amount'],
             'account_bal'=> $user_bal + $request->amount,
             ]);
-        $credit_bonus=$user->account_bal + $request->amount;
+        // $credit_bonus=$user->account_bal + $request->amount;
         $objDemo = new \stdClass();
         $objDemo->receiver_name = "$user->name";
         $objDemo->url = "https://privilege-coin.com/";
-        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of bonus and your balance is now $credit_bonus";
+        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of bonus.";
         $objDemo->sender = "$settings->site_name";
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject = "Credit Bonus!";
@@ -519,11 +519,11 @@ public function updateasst(Request $request){
               'roi'=> $user_roi + $request->amount,
               'account_bal'=> $user_bal + $request->amount,
             ]);
-            $credit_bonus=$user->$user_roi + $request->amount;
+            // $credit_bonus=$user->$user_roi + $request->amount;
             $objDemo = new \stdClass();
             $objDemo->receiver_name = "$user->name";
             $objDemo->url = "https://privilege-coin.com/";
-            $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of profit and your balance is now $credit_bonus";
+            $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of profit.";
             $objDemo->sender = "$settings->site_name";
             $objDemo->date = \Carbon\Carbon::Now();
             $objDemo->subject = "Credit Profit!";
@@ -535,11 +535,11 @@ public function updateasst(Request $request){
               'Ref_Bonus'=> $user_Ref + $request->amount,
               'account_bal'=> $user_bal + $request->amount,
             ]);
-            $credit_bonus=$user->$user_Ref + $request->amount;
+            // $credit_bonus=$user->$user_Ref + $request->amount;
         $objDemo = new \stdClass();
         $objDemo->receiver_name = "$user->name";
         $objDemo->url = "https://privilege-coin.com/";
-        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of Reference_Bonus and your balance is now $credit_bonus";
+        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of Reference_Bonus.";
         $objDemo->sender = "$settings->site_name";
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject = "Credit Reference_Bonus!";
@@ -553,11 +553,11 @@ public function updateasst(Request $request){
             'bonus'=> $user_bonus - $request['amount'],
             'account_bal'=> $user_bal - $request->amount,
             ]);
-            $debit_bonus=$user->account_bal - $request->amount;
+            // $debit_bonus=$user->account_bal - $request->amount;
             $objDemo = new \stdClass();
             $objDemo->receiver_name = "$user->name";
             $objDemo->url = "https://privilege-coin.com/";
-            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Bonus and your balance is now $debit_bonus";
+            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Bonus.";
             $objDemo->sender = "$settings->site_name";
             $objDemo->date = \Carbon\Carbon::Now();
             $objDemo->subject = "Debit Bonus!";
@@ -569,11 +569,11 @@ public function updateasst(Request $request){
                 'roi'=> $user_roi - $request->amount,
                 'account_bal'=> $user_bal - $request->amount,
               ]);
-            $debit_bonus=$user->account_bal - $request->amount;
+            // $debit_bonus=$user->account_bal - $request->amount;
             $objDemo = new \stdClass();
             $objDemo->receiver_name = "$user->name";
             $objDemo->url = "https://privilege-coin.com/";
-            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Profit and your balance is now $debit_bonus";
+            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Profit.";
             $objDemo->sender = "$settings->site_name";
             $objDemo->date = \Carbon\Carbon::Now();
             $objDemo->subject = "Debit Profit!";
@@ -585,11 +585,11 @@ public function updateasst(Request $request){
                 'Ref_Bonus'=> $user_Ref - $request->amount,
                 'account_bal'=> $user_bal - $request->amount,
               ]);
-              $debit_bonus=$user->account_bal - $request->amount;
+              // $debit_bonus=$user->account_bal - $request->amount;
             $objDemo = new \stdClass();
             $objDemo->receiver_name = "$user->name";
             $objDemo->url = "https://privilege-coin.com/";
-            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Reference_Bonus and your balance is now $debit_bonus";
+            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Reference_Bonus.";
             $objDemo->sender = "$settings->site_name";
             $objDemo->date = \Carbon\Carbon::Now();
             $objDemo->subject = "Debit Reference_Bonus!";
