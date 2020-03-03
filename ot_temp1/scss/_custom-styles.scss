@@ -1,0 +1,200 @@
+// Your custom styles
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.navbar {
+  padding-top: 18px;
+  width: 100%;
+}
+
+.nav-link {
+  font-family: Roboto, Helvetica Neue, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 88px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.nav-link:hover {
+  position: relative;
+  position: relative;
+  cursor: pointer;
+  outline: none !important;
+  border: none !important;
+}
+
+.navbar-brand {
+  font-family: Roboto, Helvetica Neue, sans-serif;
+  padding: 0 16px;
+
+  img{
+      width: 70px !important;
+  }
+}
+
+.imgtop{
+  padding-top: 100px !important;
+  img{
+    width: 450px;
+  }
+}
+.hero-heading {
+  text-align: center;
+  line-height: 1.3;
+  margin-top: 50px;
+  font-weight: 300;
+  font-family: "Roboto Slab", sans-serif;
+  padding: 0 7px;
+  width: 100%;
+  z-index: 5;
+}
+@media (min-width: 768px) { 
+  .hero-heading {
+    margin-top: 180px !important;
+  }
+}
+
+.hero-sub-title {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* 
+=================================
+--------- Media Query -----------
+===============================*/
+
+/*==============================
+---------- Mobile View  --------
+==============================*/
+@media (min-width: 350px) and (max-width: 1024px) {
+  .navbar {
+  padding-top: 20px;
+}
+  .navbar-collapse {
+    padding: 20px;
+    z-index: 55;
+  }
+
+}
+
+/* Mobile -btn */
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(255, 255, 255)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+.navbar-dark .navbar-toggler {
+  border-color: transparent !important;
+  &:focus {
+    border-color: transparent !important;
+  }
+}
+
+/* ========================
+-------- Desktop ----------
+=========================*/
+
+@media (min-width: 1200px) {
+  .navbar {
+    width: 100%;
+    padding-left: 120px;
+  }
+
+  .text-white {
+    font-family: "Open Sans", sans-serif;
+  }
+}
+
+.carousel .carousel-indicators {
+	bottom: -40px;
+}
+.carousel-indicators li, .carousel-indicators li.active {
+	width: 18px;
+  height: 18px;
+	border-radius: 50%;
+	margin: 1px 3px;
+}
+.carousel-indicators li.active {
+    border: 5px double;    
+}
+.cd{
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s; 
+    border-radius: 13px !important;
+}
+.cd:hover{
+  -webkit-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  transform: translateY(-25px); 
+}
+
+.captext:focus, :hover{
+  text-decoration: none !important;
+}
+
+
+.head {
+  position: relative;
+}
+
+.hide {
+  display: none;
+}
+
+.tab-content {
+  padding:25px;
+}
+
+#material-tabs {
+  position: relative;
+  display: block;
+  padding:0;
+}
+
+#material-tabs>a {
+  position: relative;
+ display:inline-block;
+  text-decoration: none;
+  padding: 22px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+#material-tabs>a.active {
+  font-weight: 700;
+  outline:none;
+}
+
+#material-tabs>a:not(.active):hover {
+  background-color: inherit;
+}
+
+@media only screen and (max-width: 520px) {
+  .nav-tabs#material-tabs>li>a {
+      font-size: 11px;
+  }
+}
+
+.yellow-bar {
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  height: 3px;
+  display: block;
+  left: 0;
+  transition: left .2s ease;
+  -webkit-transition: left .2s ease;
+}
+
+#tab1-tab.active ~ span.yellow-bar {
+  left: 0;
+  width: 130px;
+}
+
+#tab2-tab.active ~ span.yellow-bar {
+  left:145px;
+  width: 86px;
+}
