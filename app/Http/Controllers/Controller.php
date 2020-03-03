@@ -137,7 +137,7 @@ class Controller extends BaseController
             'signup_bonus' => "received",
             ]);
             //ajout balance
-            balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+            balances::where('user',$usf->id)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$usf->balance + $settings->signup_bonus,
                     ]);
@@ -443,10 +443,16 @@ class Controller extends BaseController
     
 
           //add funds to user's account
-        users::where('id',$user->id)
-      ->update([
-      'account_bal' => $user->account_bal + $amount,
-      ]);
+      //   users::where('id',$user->id)
+      // ->update([
+      // 'account_bal' => $user->account_bal + $amount,
+      // ]);
+
+      //ajout balance
+      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $amount,
+                    ]);
         
         //get settings 
         $settings=settings::where('id', '=', '1')->first();
@@ -460,10 +466,16 @@ class Controller extends BaseController
           //add earnings to agent balance
           //get agent
           $agent=users::where('id',$user->ref_by)->first();
-          users::where('id',$user->ref_by)
-          ->update([
-          'account_bal' => $agent->account_bal + $earnings,
-          ]);
+          // users::where('id',$user->ref_by)
+          // ->update([
+          // 'account_bal' => $agent->account_bal + $earnings,
+          // ]);
+
+          //ajout balance
+          balances::where('user',Auth::user()->ref_by)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$agent->balance + $earnings,
+                    ]);
           
           //credit commission to ancestors
             $deposit_amount = $amount;
@@ -863,7 +875,7 @@ class Controller extends BaseController
             Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     
-
+    //ajout balance
     if($plan->type=='Main'){
       //debit user
       balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
@@ -1236,7 +1248,8 @@ public function ref(Request $request, $id){
                     'roi' => $user->roi + $increment,
                     // 'account_bal' => $balance + $increment,
                     ]);
-                    balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    //ajout balance
+                    balances::where('user',$plan->user)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$balance + $increment,
                     ]);
@@ -1275,7 +1288,9 @@ public function ref(Request $request, $id){
                 //     ->update([
                 //     'account_bal' => $user->account_bal + $plan->amount,
                 // ]);
-                balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+
+                //ajout balance
+                balances::where('user',$plan->user)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$balance + $plan->amount,
                     ]);
@@ -1361,7 +1376,8 @@ public function ref(Request $request, $id){
                       // 'account_bal' => $entry->account_bal + $earnings,
                       // ]);
 
-                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$entry->balance + $earnings,
                     ]);
@@ -1377,7 +1393,8 @@ public function ref(Request $request, $id){
                       // 'account_bal' => $entry->account_bal + $earnings,
                       // ]);
 
-                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$entry->balance + $earnings,
                     ]);
@@ -1394,7 +1411,8 @@ public function ref(Request $request, $id){
                       // 'account_bal' => $entry->account_bal + $earnings,
                       // ]);
 
-                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$entry->balance + $earnings,
                     ]);
@@ -1409,7 +1427,8 @@ public function ref(Request $request, $id){
                       // 'account_bal' => $entry->account_bal + $earnings,
                       // ]);
 
-                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$entry->balance + $earnings,
                     ]);
@@ -1424,7 +1443,8 @@ public function ref(Request $request, $id){
                       // 'account_bal' => $entry->account_bal + $earnings,
                       // ]);
 
-                      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
                     ->update([
                     'balance'=>$entry->balance + $earnings,
                     ]);
