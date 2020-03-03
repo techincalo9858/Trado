@@ -758,13 +758,23 @@ public function updateasst(Request $request){
          $settings=settings::where('id', '=', '1')->first();
         
         //send email notification
+        // $objDemo = new \stdClass();
+        // $objDemo->message = "This is to inform you that a successful withdrawal has just occured on your account. Amount: $settings->currency$amount.";
+        // $objDemo->sender = $settings->site_name;
+        // $objDemo->date = \Carbon\Carbon::Now();
+        // $objDemo->subject ="Successful withdrawal";
+            
+        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
+
         $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
         $objDemo->message = "This is to inform you that a successful withdrawal has just occured on your account. Amount: $settings->currency$amount.";
         $objDemo->sender = $settings->site_name;
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject ="Successful withdrawal";
             
-        Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        Mail::bcc($user->email)->send(new htmlNotification($objDemo));
          
          if($request['payment_mode']=='Bitcoin'){
             if(empty($user->btc_address)){

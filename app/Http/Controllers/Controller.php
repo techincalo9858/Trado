@@ -33,6 +33,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\CPTrait;
 
 use App\Mail\NewNotification;
+use App\Mail\htmlNotification;
 use App\Mail\newroi;
 use App\Mail\endplan;
 use Illuminate\Support\Facades\Mail;
@@ -468,13 +469,23 @@ class Controller extends BaseController
         }
         
          //send email notification
+        // $objDemo = new \stdClass();
+        // $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency$amount has been received and confirmed.";
+        // $objDemo->sender = "$settings->site_name";
+        // $objDemo->date = \Carbon\Carbon::Now();
+        // $objDemo->subject = "Deposit processed!";
+            
+        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
+
         $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
         $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency$amount has been received and confirmed.";
         $objDemo->sender = "$settings->site_name";
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject = "Deposit processed!";
             
-        Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        Mail::bcc($user->email)->send(new htmlNotification($objDemo));
 
 
       //return redirect()->route('deposits')
