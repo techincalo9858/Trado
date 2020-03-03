@@ -167,7 +167,7 @@ class Controller extends BaseController
           $condition=empty(Auth::user()->id);
         }
         // Get Balance
-        $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        // $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
         // dd($settings);
         if(!$balance)
         {
@@ -211,7 +211,7 @@ class Controller extends BaseController
         'title'=>'User panel',
         'ref_earnings' => $ref_earnings,
         'deposited' => $total_deposited,
-        'balance' => $balance,
+        'balance' => getBalance(),
         'total_bonus' => $total_bonus,
         'user_plan' => $user_plan,
         'user_plan_active'=> $user_plan_active,
@@ -644,6 +644,16 @@ class Controller extends BaseController
         'settings' => settings::where('id','1')->first(),
         ));
     }
+    public function getBalance(){
+      $setting=settings::where('id','1')->first();
+      return balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+    }
+
+    public function setBalance($balance){
+       balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->update([
+        'balance' => $balance]);
+
+    }
 
     //Manually Add Trading History to Users Route
     public function addHistory(Request $request)
@@ -655,7 +665,8 @@ class Controller extends BaseController
          'type'=>$request->type,
         ]);
         $user=users::where('id', $request->user_id)->first();
-        $user_bal=$user->account_bal;
+  
+        $user_bal=getBalance();
         if (isset($request['amount'])>0) {
             users::where('id', $request->user_id)
             ->update([
