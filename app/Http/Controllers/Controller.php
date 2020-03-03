@@ -211,7 +211,7 @@ class Controller extends BaseController
         'title'=>'User panel',
         'ref_earnings' => $ref_earnings,
         'deposited' => $total_deposited,
-        'balance' => getBalance(),
+        'balance' => $this->getBalance(),
         'total_bonus' => $total_bonus,
         'user_plan' => $user_plan,
         'user_plan_active'=> $user_plan_active,
