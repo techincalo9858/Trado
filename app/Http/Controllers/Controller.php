@@ -785,8 +785,25 @@ class Controller extends BaseController
     
     if(isset($request['iamount']) && $request['iamount']>0){
         $plan_price=$request['iamount'];
+
+            $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you join the plan of $request->iamount EUR.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Join Plan!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
     }else{
         $plan_price = $plan->price;
+            $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you join the plan of $plan->price EUR.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Join Plan!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     //check if the user account balance can buy this plan
     if($user->account_bal < $plan_price){
