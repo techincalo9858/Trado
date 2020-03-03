@@ -826,7 +826,8 @@ class Controller extends BaseController
             // Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     //check if the user account balance can buy this plan
-    // $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+    $balance=balances::where('user',Auth::users()->id)->where('wallet',$settings->s_currency)->first();
+    dd($balance);
         // if(!$balance)
         // {
         //   $balance=0;
