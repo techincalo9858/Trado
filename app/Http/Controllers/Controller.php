@@ -826,7 +826,7 @@ class Controller extends BaseController
             // Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     //check if the user account balance can buy this plan
-    $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+    // $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
         // if(!$balance)
         // {
         //   $balance=0;
@@ -834,10 +834,10 @@ class Controller extends BaseController
         // else {
         //   $balance=$balance->balance;
         // }
-    if($balance < $plan_price){
+    if($user->account_bal < $plan_price){
         //redirect to make deposit
-        dd($balance);
-        dd($plan_price);
+        // dd($balance);
+        // dd($plan_price);
 
         return redirect()->route('deposits')
       ->with('message', 'Your account is insufficient to purchase this plan. Please make a deposit.');
