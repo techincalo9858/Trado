@@ -405,7 +405,7 @@ class UsersController extends Controller
     $deposit=deposits::where('id',$id)->first();
     $user=users::where('id',$deposit->user)->first();
     
-    deposits::where('id', $id)->delete();
+    
     $objDemo = new \stdClass();
         $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency $deposit->amount has been refused and deleted. Please do a new deposit.";
         
@@ -416,6 +416,7 @@ class UsersController extends Controller
         $objDemo->date = \Carbon\Carbon::Now();
         Mail::to($user->email)->send(new htmlNotification($objDemo));
 
+    deposits::where('id', $id)->delete();
     return redirect()->back()
     ->with('message', 'Deposit history has been deleted!');
   }
