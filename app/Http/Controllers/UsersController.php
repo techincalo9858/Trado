@@ -400,7 +400,18 @@ class UsersController extends Controller
   
   //Delete deposit
   public function deldeposit(Request $request, $id){
+    $user=users::where('id',$deposit->user)->first();
     deposits::where('id', $id)->delete();
+    $objDemo = new \stdClass();
+        $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency $deposit->amount has been refused and deleted. Please do a new deposit.";
+        
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
+        $objDemo->sender = $settings->site_name;
+        $objDemo->subject ="Deposit deleted!";
+        $objDemo->date = \Carbon\Carbon::Now();
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+        
     return redirect()->back()
     ->with('message', 'Deposit history has been deleted!');
   }
