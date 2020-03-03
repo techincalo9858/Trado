@@ -503,6 +503,7 @@ class Controller extends BaseController
       $settings=settings::where('id', '=', '1')->first();
 
       if($deposit->user==$user->id){
+        
         $s_currency=$settings->s_currency;
 
 
@@ -665,10 +666,28 @@ class Controller extends BaseController
         }
  
         if (isset($request['amount'])>0) {
-            users::where('id', $request->user_id)
-            ->update([
-            'account_bal'=> $user_bal + $request->amount,
-            ]);
+          $settings=settings::where('id', '=', '1')->first();
+          $s_currency=$settings->s_currency;
+          $b_w=balances::where('user',$deposit->user)->where('wallet',$s_currency)->first();
+           if(!$b_w){
+                //create wallet and credit wallet
+                $wallet=new balances();
+                $wallet->user = $request->user_id;
+                $wallet->wallet = $s_currency;
+                $wallet->balance = $request->amount;
+                $wallet->save();
+            
+           }else{
+               //credit wallet
+               balances::where('id', $b_w->id)
+               ->update([
+               'balance'=> $user_bal+$request->amount,
+               ]);
+           }
+            // users::where('id', $request->user_id)
+            // ->update([
+            // 'account_bal'=> $user_bal + $request->amount,
+            // ]);
         }
         $user_roi=$user->roi;
         if ( isset($request['type'])=="ROI") {
