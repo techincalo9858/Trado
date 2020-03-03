@@ -167,7 +167,7 @@ class Controller extends BaseController
           $condition=empty(Auth::user()->id);
         }
         // Get Balance
-        // $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
         // dd($settings);
         if(!$balance)
         {
@@ -204,8 +204,7 @@ class Controller extends BaseController
         }
       	else{
       	   */
-          
-          $balance=$this->getBalance(Auth::user()->id);
+         
         return view('dashboard')
         ->with(array(
         //'earnings'=>$earnings,
@@ -645,25 +644,6 @@ class Controller extends BaseController
         'settings' => settings::where('id','1')->first(),
         ));
     }
-    public function getBalance($user){
-      $setting=settings::where('id','1')->first();
-      $balance=balances::where('user',$user)->where('wallet',$settings->s_currency)->first();
-      if(!$balance)
-      {
-        $balance=0;
-      }
-      else {
-        $balance=$balance->balance;
-      }
-      dd($balance);
-      return $balance;
-    }
-
-    public function setBalance($balance,$user){
-       balances::where('user',$user->id)->where('wallet',$settings->s_currency)->update([
-        'balance' => $balance]);
-
-    }
 
     //Manually Add Trading History to Users Route
     public function addHistory(Request $request)
@@ -675,8 +655,15 @@ class Controller extends BaseController
          'type'=>$request->type,
         ]);
         $user=users::where('id', $request->user_id)->first();
-  
-        $user_bal=getBalance(Auth::user()->id);
+        $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        if(!$balance)
+        {
+          $user_bal=0;
+        }
+        else {
+          $user_bal=$balance->balance;
+        }
+ 
         if (isset($request['amount'])>0) {
             users::where('id', $request->user_id)
             ->update([
@@ -827,7 +814,15 @@ class Controller extends BaseController
             Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     //check if the user account balance can buy this plan
-    if($user->account_bal < $plan_price){
+    $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        if(!$balance)
+        {
+          $balance=0;
+        }
+        else {
+          $balance=$balance->balance;
+        }
+    if($balance < $plan_price){
         //redirect to make deposit
         return redirect()->route('deposits')
       ->with('message', 'Your account is insufficient to purchase this plan. Please make a deposit.');
@@ -838,7 +833,7 @@ class Controller extends BaseController
           //debit user
           users::where('id', $user->id)
           ->update([
-         'account_bal'=>$user->account_bal-$plan_price,
+         'account_bal'=>$balance-$plan_price,
         ]);
         
           //save user plan
@@ -1184,10 +1179,18 @@ public function ref(Request $request, $id){
                     }
                   }
                   else{*/
+                    $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        if(!$balance)
+        {
+          $balance=0;
+        }
+        else {
+          $balance=$balance->balance;
+        }
                     users::where('id', $plan->user)
                     ->update([
                     'roi' => $user->roi + $increment,
-                    'account_bal' => $user->account_bal + $increment,
+                    'account_bal' => $balance + $increment,
                     ]);
                     
                     //save to transactions history
