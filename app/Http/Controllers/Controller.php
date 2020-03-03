@@ -205,7 +205,7 @@ class Controller extends BaseController
       	else{
       	   */
           
-          $balance=$this->getBalance();
+          $balance=$this->getBalance(Auth::user()->id);
         return view('dashboard')
         ->with(array(
         //'earnings'=>$earnings,
