@@ -351,6 +351,7 @@ class Controller extends BaseController
           'settings' => settings::where('id', '=', '1')->first(),
           ));
         }
+        $settings=settings::where('id', '=', '1')->first();
         return view('users')
           ->with(array(
           'title'=>'All users',
