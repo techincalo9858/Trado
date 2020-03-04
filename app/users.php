@@ -30,7 +30,7 @@ class users extends Model
     	return $this->hasMany('App\withdrawals', 'user');
     }
     public function bal(){
-    	return $this->hasMany('App\balance', 'user');
+    	return $this->belongsTo('App\balance', 'user');
     }
 
     public function dplan(){
