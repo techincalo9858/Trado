@@ -352,8 +352,8 @@ class Controller extends BaseController
           ));
         }
         $settings=settings::where('id', '=', '1')->first();
-        return view('users')
-          ->with(array(
+
+        $data=array(
           'title'=>'All users',
           'pl'=> $pl,
           // 'users' => users::where('seller','=', Auth::user()->id)->paginate(10),
@@ -361,7 +361,10 @@ class Controller extends BaseController
           'balances' =>balances::where('wallet',$settings->s_currency),
           'sellers' => users::where('type', '=', '2')->paginate(10),
           'settings' => settings::where('id', '=', '1')->first(),
-          ));
+        );
+        dd($data);
+        return view('users')
+          ->with($data);
         
       }
 
