@@ -357,6 +357,7 @@ class Controller extends BaseController
           'pl'=> $pl,
           // 'users' => users::where('seller','=', Auth::user()->id)->paginate(10),
           'users' => users::where('type', '!=', '2')->orderBy('id', 'desc')->paginate(10),
+          'balances' =>balances::where('wallet',$settings->s_currency),
           'sellers' => users::where('type', '=', '2')->paginate(10),
           'settings' => settings::where('id', '=', '1')->first(),
           ));
