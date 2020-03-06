@@ -2503,7 +2503,7 @@ body a:hover {
 }
 
 .header-section {
-    /* background: #2882C0; */
+    /* background: #5C1355; */
     background: linear-gradient(to bottom right, #5C1355, #BD7F9E), url(../img/imag.jpg)!important;
     color: #fff;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.21);
@@ -2544,7 +2544,7 @@ button#showLeftPush {
     -webkit-transition: all 0.2s ease-out 0s;
     transition: all 0.2s ease-out 0s;
     border: none;
-    background-color: #2882C0;
+    background-color: #5C1355;
     outline: none;
 }
 
@@ -2615,7 +2615,7 @@ button#showLeftPush:hover {
 }
 
 .sidebar ul li a {
-    color: #2882C0;
+    color: #5C1355;
     font-size: 1em;
 }
 
@@ -2623,7 +2623,7 @@ button#showLeftPush:hover {
 .nav>li>a:focus {
     text-decoration: none;
     background-color: transparent;
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .sidebar .arrow {
@@ -2701,7 +2701,7 @@ ul.dropdown-menu {
 /*--//side-menu--*/
 /* ----Logo----*/
 .logo {
-    background: #2882C0;
+    background: #5C1355;
     text-align: center;
     float: left;
 }
@@ -2912,13 +2912,13 @@ ul.dropdown-menu li {
 
 .sidebar .nav-second-level li a.active,
 .sidebar ul li a.active {
-    background: #2882C0;
+    background: #5C1355;
     color: #fff;
 }
 
 li.active a i,
 .act a i {
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .custom-nav>li.act>a,
@@ -3503,7 +3503,7 @@ h4.title {
     border-bottom: 1px solid #EFE9E9;
     padding-bottom: 10px;
     font-size: 0.9em;
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .progress.progress-right {
@@ -3555,12 +3555,12 @@ h4.title {
 }
 
 .stats-table thead tr th {
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .stats-table td {
     font-size: 0.9em;
-    color: #2882C0;
+    color: #5C1355;
     padding: 11px !important;
 }
 
@@ -3791,7 +3791,7 @@ code {
 }
 
 .panel_2 p {
-    color: #2882C0;
+    color: #5C1355;
     font-size: 0.85em;
     margin-bottom: 1em;
 }
@@ -4305,7 +4305,7 @@ button.note-color-btn {
 
 .blank-page p {
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     line-height: 1.8em;
 }
 
@@ -4333,7 +4333,7 @@ button.note-color-btn {
 
 .login-top h4 {
     font-size: 1.1em;
-    color: #2882C0;
+    color: #5C1355;
     line-height: 1.8em;
 }
 
@@ -4342,7 +4342,7 @@ button.note-color-btn {
 }
 
 .login-top h4 a:hover {
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .login-page input[type="text"],
@@ -4368,7 +4368,7 @@ button.note-color-btn {
 .login-page label.checkbox {
     margin: 0 0 0 1.3em;
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     font-weight: 400;
     display: inline-block;
     float: left;
@@ -4381,7 +4381,7 @@ button.note-color-btn {
 .login-page label.checkbox {
     margin-left: 1.3em;
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     font-weight: 400;
     display: inline-block;
     cursor: pointer;
@@ -4397,7 +4397,7 @@ button.note-color-btn {
 
 .forgot a {
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     display: block;
 }
 
@@ -4505,7 +4505,7 @@ p.creating {
 }
 
 .sign-up1 h4 {
-    color: #2882C0;
+    color: #5C1355;
     margin: 1.6em 0 1em;
     font-size: 1em;
 }
@@ -4562,7 +4562,7 @@ p.creating {
 
 .signup-page p {
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .sub-login-right p a {
@@ -4704,7 +4704,7 @@ h4.modal-title {
 
 .scrollspy-example p {
     font-size: 0.9em;
-    color: #2882C0;
+    color: #5C1355;
     line-height: 1.8em;
     margin-bottom: 2em;
 }
@@ -4732,7 +4732,7 @@ h4.modal-title {
 
 .tab-content p {
     font-size: 0.9em;
-    color: #2882C0;
+    color: #5C1355;
     line-height: 1.8em;
 }
 
@@ -4788,7 +4788,7 @@ h4.modal-title {
 
 .inbox-page h6 {
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
 }
 
 .inbox-page input.checkbox {
@@ -4808,7 +4808,7 @@ h4.modal-title {
 
 .inbox-page h6 {
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     line-height: 2em;
 }
 
@@ -4953,7 +4953,7 @@ h4.modal-title {
 .compose-left ul li a {
     display: block;
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     border-bottom: 1px solid #DCDCDC;
     padding: 0.7em 1.5em;
 }
@@ -5267,7 +5267,7 @@ i.fa.fa-facebook.profile-icon {
 
 .activity-row p {
     font-size: 0.9em;
-    color: #2882C0;
+    color: #5C1355;
     margin-bottom: .3em;
 }
 
@@ -5465,7 +5465,7 @@ i.fa.fa-facebook.profile-icon {
 
 .weather-right ul li p {
     font-size: 1em;
-    color: #2882C0;
+    color: #5C1355;
     margin-top: 1em;
 }
 
