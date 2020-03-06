@@ -78,6 +78,7 @@
 
 						</td> -->
 						<!-- <td>${{$list->account_bal}}</td> -->
+						<td></td>
 						<td>{{$list->name}}</td>
 						<td>{{$list->l_name}}</td>
 						<td>{{$list->email}}</td>
