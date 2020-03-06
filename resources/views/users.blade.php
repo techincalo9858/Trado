@@ -74,7 +74,7 @@
 						<td>
 								@foreach($list->bal()->get() as $balance)
 									@if($balance->wallet=='EUR')
-										{{$balance->balance}}
+										{{round($balance->balance, 2)}}
 									@endif
 								@endforeach
 						</td>
