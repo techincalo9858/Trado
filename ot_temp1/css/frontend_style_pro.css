@@ -70,10 +70,14 @@
 }
 
 #contact {
-    background: -webkit-gradient(linear, left top, right bottom, from(#2998ff), to(#5643fa));
+    /* background: -webkit-gradient(linear, left top, right bottom, from(#2998ff), to(#5643fa));
     background: -webkit-linear-gradient(top left, #2998ff, #5643fa);
     background: -o-linear-gradient(top left, #2998ff, #5643fa);
-    background: linear-gradient(to bottom right, #2998ff, #5643fa)
+    background: linear-gradient(to bottom right, #2998ff, #5643fa) */
+    background: -webkit-gradient(linear, left top, right bottom, from(rgba(0,0,0,0.4)), to(rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(top left, rgba(0,0,0,0.4), rgba(0,0,0,0));
+    background: -o-linear-gradient(top left, rgba(0,0,0,0.4), rgba(0,0,0,0));
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.4), rgba(0,0,0,0))
 }
 
 .btn-primary {
