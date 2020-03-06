@@ -37,6 +37,10 @@ body a {
 .mp {
     margin-top: -46px;
 }
+.btn-primary{
+    /* color:#5C1355 !important; */
+    background: linear-gradient(to bottom right, #5C1355, #BD7F9E)!important
+}
 
 @media(max-width:768px) {
     .t-b {
