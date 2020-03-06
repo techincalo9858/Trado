@@ -68,7 +68,16 @@
 					@foreach($users as $list)
 					<tr>
 						<th scope="row">{{$list->id}}</th>
-						<td>${{$list->account_bal}}</td>
+						<!-- <td>
+						@foreach($balances as $balance)
+							@if($list->id==$balance->user)
+									{{$balance->balance}}
+							@endif
+
+						@endforeach
+
+						</td> -->
+						<!-- <td>${{$list->account_bal}}</td> -->
 						<td>{{$list->name}}</td>
 						<td>{{$list->l_name}}</td>
 						<td>{{$list->email}}</td>

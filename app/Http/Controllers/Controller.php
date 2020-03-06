@@ -32,7 +32,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Traits\CPTrait;
 
-use App\Mail\NewNotification;
+// use App\Mail\NewNotification;
+use App\Mail\htmlNotification;
 use App\Mail\newroi;
 use App\Mail\endplan;
 use Illuminate\Support\Facades\Mail;
@@ -132,9 +133,14 @@ class Controller extends BaseController
               users::where('id', $usf->id)
             ->update([
               'bonus' =>$usf->bonus + $settings->signup_bonus,
-            'account_bal' => $usf->account_bal + $settings->signup_bonus,
+            // 'account_bal' => $usf->account_bal + $settings->signup_bonus,
             'signup_bonus' => "received",
             ]);
+            //ajout balance
+            balances::where('user',$usf->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$usf->balance + $settings->signup_bonus,
+                    ]);
           }
           } 
           
@@ -345,15 +351,20 @@ class Controller extends BaseController
           'settings' => settings::where('id', '=', '1')->first(),
           ));
         }
-        return view('users')
-          ->with(array(
+        $settings=settings::where('id', '=', '1')->first();
+
+        $data=array(
           'title'=>'All users',
           'pl'=> $pl,
           // 'users' => users::where('seller','=', Auth::user()->id)->paginate(10),
           'users' => users::where('type', '!=', '2')->orderBy('id', 'desc')->paginate(10),
+          'balances' =>balances::where('wallet',$settings->s_currency),
           'sellers' => users::where('type', '=', '2')->paginate(10),
           'settings' => settings::where('id', '=', '1')->first(),
-          ));
+        );
+        dd($data);
+        return view('users')
+          ->with($data);
         
       }
 
@@ -437,10 +448,16 @@ class Controller extends BaseController
     
 
           //add funds to user's account
-        users::where('id',$user->id)
-      ->update([
-      'account_bal' => $user->account_bal + $amount,
-      ]);
+      //   users::where('id',$user->id)
+      // ->update([
+      // 'account_bal' => $user->account_bal + $amount,
+      // ]);
+
+      //ajout balance
+      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $amount,
+                    ]);
         
         //get settings 
         $settings=settings::where('id', '=', '1')->first();
@@ -454,10 +471,16 @@ class Controller extends BaseController
           //add earnings to agent balance
           //get agent
           $agent=users::where('id',$user->ref_by)->first();
-          users::where('id',$user->ref_by)
-          ->update([
-          'account_bal' => $agent->account_bal + $earnings,
-          ]);
+          // users::where('id',$user->ref_by)
+          // ->update([
+          // 'account_bal' => $agent->account_bal + $earnings,
+          // ]);
+
+          //ajout balance
+          balances::where('user',Auth::user()->ref_by)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$agent->balance + $earnings,
+                    ]);
           
           //credit commission to ancestors
             $deposit_amount = $amount;
@@ -468,13 +491,24 @@ class Controller extends BaseController
         }
         
          //send email notification
+        // $objDemo = new \stdClass();
+        // $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency$amount has been received and confirmed.";
+        // $objDemo->sender = "$settings->site_name";
+        // $objDemo->date = \Carbon\Carbon::Now();
+        // $objDemo->subject = "Deposit processed!";
+            
+        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
+
         $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
         $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency$amount has been received and confirmed.";
         $objDemo->sender = "$settings->site_name";
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject = "Deposit processed!";
             
-        Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
 
 
       //return redirect()->route('deposits')
@@ -491,6 +525,7 @@ class Controller extends BaseController
       $settings=settings::where('id', '=', '1')->first();
 
       if($deposit->user==$user->id){
+        
         $s_currency=$settings->s_currency;
 
 
@@ -547,11 +582,19 @@ class Controller extends BaseController
          //send email notification
         $objDemo = new \stdClass();
         $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency $deposit->amount has been received and confirmed.";
-        $objDemo->sender = "$settings->site_name";
+        
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
+        $objDemo->sender = $settings->site_name;
+        $objDemo->subject ="Deposit processed!";
         $objDemo->date = \Carbon\Carbon::Now();
-        $objDemo->subject = "Deposit processed!";
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
+        // $objDemo->sender = "$settings->site_name";
+        // $objDemo->date = \Carbon\Carbon::Now();
+        // $objDemo->subject = "Deposit processed!";
             
-        Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
     
       }
 
@@ -586,13 +629,15 @@ class Controller extends BaseController
         //send email notification
         $objDemo = new \stdClass();
         $objDemo->message = "This is to inform you that a successful withdrawal has just occured on your account. Amount: $settings->currency$withdrawal->amount.";
-        
-        
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
         $objDemo->sender = $settings->site_name;
         $objDemo->subject ="Successful withdrawal";
         $objDemo->date = \Carbon\Carbon::Now();
       
-        Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
         
       return redirect()->back()
       ->with('message', 'Action Sucessful!');
@@ -633,12 +678,38 @@ class Controller extends BaseController
          'type'=>$request->type,
         ]);
         $user=users::where('id', $request->user_id)->first();
-        $user_bal=$user->account_bal;
+        $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        if(!$balance)
+        {
+          $user_bal=0;
+        }
+        else {
+          $user_bal=$balance->balance;
+        }
+ 
         if (isset($request['amount'])>0) {
-            users::where('id', $request->user_id)
-            ->update([
-            'account_bal'=> $user_bal + $request->amount,
-            ]);
+          $settings=settings::where('id', '=', '1')->first();
+          $s_currency=$settings->s_currency;
+          $b_w=balances::where('user',$deposit->user)->where('wallet',$s_currency)->first();
+           if(!$b_w){
+                //create wallet and credit wallet
+                $wallet=new balances();
+                $wallet->user = $request->user_id;
+                $wallet->wallet = $s_currency;
+                $wallet->balance = $request->amount;
+                $wallet->save();
+            
+           }else{
+               //credit wallet
+               balances::where('id', $b_w->id)
+               ->update([
+               'balance'=> $user_bal+$request->amount,
+               ]);
+           }
+            // users::where('id', $request->user_id)
+            // ->update([
+            // 'account_bal'=> $user_bal + $request->amount,
+            // ]);
         }
         $user_roi=$user->roi;
         if ( isset($request['type'])=="ROI") {
@@ -760,26 +831,69 @@ class Controller extends BaseController
     $user=users::where('id',Auth::user()->id)->first();
     //get plan
     $plan=plans::where('id',$request['id'])->first();
+    $settings=settings::where('id','1')->first();
+
     
     if(isset($request['iamount']) && $request['iamount']>0){
         $plan_price=$request['iamount'];
+
+            
     }else{
         $plan_price = $plan->price;
+            // $objDemo = new \stdClass();
+            // $objDemo->receiver_name = "$user->name";
+            // $objDemo->url = "https://privilege-coin.com/";
+            // $objDemo->message = "$user->name, This is to inform you that you join the plan of $plan->price EUR.";
+            // $objDemo->sender = "$settings->site_name";
+            // $objDemo->date = \Carbon\Carbon::Now();
+            // $objDemo->subject = "Join Plan!";
+            // Mail::to($user->email)->send(new htmlNotification($objDemo));
     }
     //check if the user account balance can buy this plan
-    if($user->account_bal < $plan_price){
+    $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+    // dd($balance);
+        if(!$balance)
+        {
+          $balance=0;
+        }
+        else {
+          $balance=$balance->balance;
+        }
+    if($balance < $plan_price){
         //redirect to make deposit
+        // dd($balance);
+        // // dd($plan_price);
+
         return redirect()->route('deposits')
       ->with('message', 'Your account is insufficient to purchase this plan. Please make a deposit.');
         
     }
+    else{
+      
+      $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you join the plan of $plan_price EUR.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Join Plan!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
+    }
+    
+    //ajout balance
+    if($plan->type=='Main'){
+      //debit user
+      balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)
+      ->update([
+     'balance'=>$balance-$plan_price,
+    ]);
   
-      if($plan->type=='Main'){
-          //debit user
-          users::where('id', $user->id)
-          ->update([
-         'account_bal'=>$user->account_bal-$plan_price,
-        ]);
+      // if($plan->type=='Main'){
+      //     //debit user
+      //     users::where('id', $user->id)
+      //     ->update([
+      //    'account_bal'=>$balance-$plan_price,
+      //   ]);
         
           //save user plan
           $userplanid = DB::table('user_plans')->insertGetId(
@@ -893,6 +1007,7 @@ class Controller extends BaseController
 
        //assign referal link to user
         $settings=settings::where('id', '=', '1')->first();
+
 
         users::where('id', $thisid)
           ->update([
@@ -1124,10 +1239,24 @@ public function ref(Request $request, $id){
                     }
                   }
                   else{*/
+                    $settings=settings::where('id','1')->first();
+                    $balance=balances::where('user',Auth::user()->id)->where('wallet',$settings->s_currency)->first();
+        if(!$balance)
+        {
+          $balance=0;
+        }
+        else {
+          $balance=$balance->balance;
+        }
                     users::where('id', $plan->user)
                     ->update([
                     'roi' => $user->roi + $increment,
-                    'account_bal' => $user->account_bal + $increment,
+                    // 'account_bal' => $balance + $increment,
+                    ]);
+                    //ajout balance
+                    balances::where('user',$plan->user)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$balance + $increment,
                     ]);
                     
                     //save to transactions history
@@ -1160,10 +1289,16 @@ public function ref(Request $request, $id){
                 
                 //release capital
             if($condition2){
-                 users::where('id', $plan->user)
+                //  users::where('id', $plan->user)
+                //     ->update([
+                //     'account_bal' => $user->account_bal + $plan->amount,
+                // ]);
+
+                //ajout balance
+                balances::where('user',$plan->user)->where('wallet',$settings->s_currency)
                     ->update([
-                    'account_bal' => $user->account_bal + $plan->amount,
-                ]);
+                    'balance'=>$balance + $plan->amount,
+                    ]);
                 
                 //plan expired
                 user_plans::where('id', $plan->id)
@@ -1241,46 +1376,83 @@ public function ref(Request $request, $id){
                      if($level == 1){
                     $earnings=$settings->referral_commission1*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 2){
                     $earnings=$settings->referral_commission2*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
+
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 3){
                     $earnings=$settings->referral_commission3*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 4){
                     $earnings=$settings->referral_commission4*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
+
                       //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);
                     }elseif($level == 5){
                     $earnings=$settings->referral_commission5*$deposit_amount/100;
                     //add earnings to ancestor balance
-                      users::where('id',$entry->id)
-                      ->update([
-                      'account_bal' => $entry->account_bal + $earnings,
-                      ]);
+                      // users::where('id',$entry->id)
+                      // ->update([
+                      // 'account_bal' => $entry->account_bal + $earnings,
+                      // ]);
+
+                      //ajout balance
+                      balances::where('user',$entry->id)->where('wallet',$settings->s_currency)
+                    ->update([
+                    'balance'=>$entry->balance + $earnings,
+                    ]);
                      
                      //increment in agent (ref) table
                      agents::where('agent',$entry->id)->increment('earnings', $earnings);

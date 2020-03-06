@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Mail\NewNotification;
+use App\Mail\htmlNotification;
+
 use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
@@ -400,6 +402,22 @@ class UsersController extends Controller
   
   //Delete deposit
   public function deldeposit(Request $request, $id){
+    $deposit=deposits::where('id',$id)->first();
+    $user=users::where('id',$deposit->user)->first();
+    $settings=settings::where('id', '=', '1')->first();
+
+    
+    
+    $objDemo = new \stdClass();
+        $objDemo->message = "$user->name, This is to inform you that your deposit of $settings->currency $deposit->amount has been refused and deleted. Please do a new deposit.";
+        
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
+        $objDemo->sender = $settings->site_name;
+        $objDemo->subject ="Deposit deleted!";
+        $objDemo->date = \Carbon\Carbon::Now();
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
     deposits::where('id', $id)->delete();
     return redirect()->back()
     ->with('message', 'Deposit history has been deleted!');

@@ -13,6 +13,8 @@ use App\Http\Requests;
 
 use App\Mail\newregisteration;
 use App\Mail\htmlRegister;
+use App\Mail\htmlconnect;
+
 use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
@@ -87,19 +89,19 @@ class RegisterController extends Controller
       $objDemo->receiver_email = $data['email'];
        $objDemo->receiver_password = $data['password'];
       $objDemo->sender = "$settings->site_name";
-      $objDemo->receiver_name = $data['name'];
-      $objDemo->receiver_name = $data['l_name'];
+      $objDemo->receiver_name = $data['name'].' '.$data['l_name'];
+      $objDemo->subject = 'Enregistrement';
       $objDemo->acct_activate_link = $settings->site_address."/activate/".session()->getId();
 
       Mail::to($data['email'])->send(new htmlRegister($objDemo));
 
       $objDemo1 = new \stdClass();
       $objDemo1->sender = "$settings->site_name";
-      $objDemo1->receiver_name = $data['name'];
-      $objDemo1->receiver_name = $data['l_name'];
+      $objDemo1->receiver_name = $data['name'].' '.$data['l_name'];
+      $objDemo1->subject = 'Connection';
       $objDemo1->url ="https://privilege-coin.com/login";
 
-      Mail::to($data['email'])->send(new htmlconnect($objDemo));
+      Mail::to($data['email'])->send(new htmlconnect($objDemo1));
         
         return User::create([
             'name' => $data['name'],

@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Mail\NewNotification;
+use App\Mail\htmlNotification;
 use Illuminate\Support\Facades\Mail;
 
 use App\Http\Traits\CPTrait;
@@ -502,18 +503,48 @@ public function updateasst(Request $request){
             'bonus'=> $user_bonus + $request['amount'],
             'account_bal'=> $user_bal + $request->amount,
             ]);
+        // $credit_bonus=$user->account_bal + $request->amount;
+        $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
+        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of bonus.";
+        $objDemo->sender = "$settings->site_name";
+        $objDemo->date = \Carbon\Carbon::Now();
+        $objDemo->subject = "Credit Bonus!";
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
         }elseif ($request['type']=="Profit") {
           users::where('id', $request->user_id)
             ->update([
               'roi'=> $user_roi + $request->amount,
               'account_bal'=> $user_bal + $request->amount,
             ]);
+            // $credit_bonus=$user->$user_roi + $request->amount;
+            $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of profit.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Credit Profit!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
+
         }elseif($request['type']=="Ref_Bonus"){
           users::where('id', $request->user_id)
             ->update([
               'Ref_Bonus'=> $user_Ref + $request->amount,
               'account_bal'=> $user_bal + $request->amount,
             ]);
+            // $credit_bonus=$user->$user_Ref + $request->amount;
+        $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
+        $objDemo->message = "$user->name, This is to inform you that you have been credit of $request->amount EUR of Reference_Bonus.";
+        $objDemo->sender = "$settings->site_name";
+        $objDemo->date = \Carbon\Carbon::Now();
+        $objDemo->subject = "Credit Reference_Bonus!";
+        Mail::to($user->email)->send(new htmlNotification($objDemo));
+
         }
       }elseif($request['t_type']=="Debit") {
         if ($request['type']=="Bonus") {
@@ -522,18 +553,47 @@ public function updateasst(Request $request){
             'bonus'=> $user_bonus - $request['amount'],
             'account_bal'=> $user_bal - $request->amount,
             ]);
+            // $debit_bonus=$user->account_bal - $request->amount;
+            $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Bonus.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Debit Bonus!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
+
         }elseif ($request['type']=="Profit") {
             users::where('id', $request->user_id)
               ->update([
                 'roi'=> $user_roi - $request->amount,
                 'account_bal'=> $user_bal - $request->amount,
               ]);
+            // $debit_bonus=$user->account_bal - $request->amount;
+            $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Profit.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Debit Profit!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
+
           }elseif($request['type']=="Ref_Bonus"){
             users::where('id', $request->user_id)
               ->update([
                 'Ref_Bonus'=> $user_Ref - $request->amount,
                 'account_bal'=> $user_bal - $request->amount,
               ]);
+              // $debit_bonus=$user->account_bal - $request->amount;
+            $objDemo = new \stdClass();
+            $objDemo->receiver_name = "$user->name";
+            $objDemo->url = "https://privilege-coin.com/";
+            $objDemo->message = "$user->name, This is to inform you that you have been debit of $request->amount EUR of Reference_Bonus.";
+            $objDemo->sender = "$settings->site_name";
+            $objDemo->date = \Carbon\Carbon::Now();
+            $objDemo->subject = "Debit Reference_Bonus!";
+            Mail::to($user->email)->send(new htmlNotification($objDemo));
           }
       }
           return redirect()->route('manageusers')
@@ -758,13 +818,23 @@ public function updateasst(Request $request){
          $settings=settings::where('id', '=', '1')->first();
         
         //send email notification
+        // $objDemo = new \stdClass();
+        // $objDemo->message = "This is to inform you that a successful withdrawal has just occured on your account. Amount: $settings->currency$amount.";
+        // $objDemo->sender = $settings->site_name;
+        // $objDemo->date = \Carbon\Carbon::Now();
+        // $objDemo->subject ="Successful withdrawal";
+            
+        // Mail::bcc($user->email)->send(new NewNotification($objDemo));
+
         $objDemo = new \stdClass();
+        $objDemo->receiver_name = "$user->name";
+        $objDemo->url = "https://privilege-coin.com/";
         $objDemo->message = "This is to inform you that a successful withdrawal has just occured on your account. Amount: $settings->currency$amount.";
         $objDemo->sender = $settings->site_name;
         $objDemo->date = \Carbon\Carbon::Now();
         $objDemo->subject ="Successful withdrawal";
             
-        Mail::bcc($user->email)->send(new NewNotification($objDemo));
+        Mail::bcc($user->email)->send(new htmlNotification($objDemo));
          
          if($request['payment_mode']=='Bitcoin'){
             if(empty($user->btc_address)){

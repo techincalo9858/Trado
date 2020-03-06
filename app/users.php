@@ -29,6 +29,9 @@ class users extends Model
     public function wd(){
     	return $this->hasMany('App\withdrawals', 'user');
     }
+    public function bal(){
+    	return $this->hasMany('App\balances', 'user');
+    }
 
     public function dplan(){
     	return $this->belongsTo('App\plans', 'plan');
