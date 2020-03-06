@@ -362,7 +362,7 @@ class Controller extends BaseController
           'sellers' => users::where('type', '=', '2')->paginate(10),
           'settings' => settings::where('id', '=', '1')->first(),
         );
-        dd($data['users'][0]->bal());
+        dd($data['users'][0]->bal()[0]);
         return view('users')
           ->with($data);
         
