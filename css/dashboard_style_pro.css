@@ -43,7 +43,10 @@ body a {
     border-color: #f5f5dc00!important;
 }
 .bg-primary{
-    background: linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0))!important;
+    background: linear-gradient(to right,rgba(0,0,0,0.4),rgba(0,0,0,0))!important;
+}
+.flip-card-front{
+    background: linear-gradient(to right,rgba(0,0,0,0.4),rgba(0,0,0,0))!important;
 }
 
 
