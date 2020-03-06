@@ -68,15 +68,18 @@
 					@foreach($users as $list)
 					<tr>
 						<th scope="row">{{$list->id}}</th>
-						<!-- <td>
-						@foreach($balances as $balance)
-							@if($list->id==$balance->user)
-									{{$balance->balance}}
-							@endif
-
-						@endforeach
-
-						</td> -->
+						@if($list->bal()->get()->count()==0)
+						<td>0</td>
+						@else
+						<td>
+								@foreach($list->bal()->get() as $balance)
+									@if($balance->wallet=='EUR')
+										{{$balance->balance}}
+									@endif
+								@endforeach
+						</td>
+						@endif
+						
 						<!-- <td>${{$list->account_bal}}</td> -->
 						<td></td>
 						<td>{{$list->name}}</td>
@@ -336,7 +339,7 @@
 					<!-- /Switch user account Modal -->
 
 					<!-- select Seller Modal -->
-					<div id="selectSellerModal{{$list->id}}" class="modal fade" role="dialog" >
+					<div id="selectSellerModal{{$list->id}}" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 
 							<!-- Modal content-->
@@ -360,7 +363,7 @@
 										<input type="submit" class="btn btn-default" value="Add to Seller">
 									</form>
 								</div>
-								
+
 
 							</div>
 						</div>
