@@ -39,7 +39,8 @@ body a {
 }
 .btn-primary{
     /* color:#5C1355 !important; */
-    background: linear-gradient(to bottom right, #5C1355, #BD7F9E)!important
+    background: linear-gradient(to bottom right, #5C1355, #BD7F9E)!important;
+    border-color: #f5f5dc00!important;
 }
 
 @media(max-width:768px) {
