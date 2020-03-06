@@ -34,7 +34,7 @@
     <div class="hero">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top ml-auto shadow">
-          <a class="navbar-brand" href="./"><img src="public/images/{{$settings->logo}}" target="blank" alt="{{$settings->site_name}}"></a>
+          <a class="navbar-brand" href="./"><img src="images/{{$settings->logo}}" target="blank" alt="{{$settings->site_name}}"></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
