@@ -2503,7 +2503,8 @@ body a:hover {
 }
 
 .header-section {
-    background: #2882C0;
+    /* background: #2882C0; */
+    background: linear-gradient(to bottom right, #5C1355, #BD7F9E), url(../img/imag.jpg)!important;
     color: #fff;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.21);
     -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.21);
