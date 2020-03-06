@@ -2701,7 +2701,7 @@ ul.dropdown-menu {
 /*--//side-menu--*/
 /* ----Logo----*/
 .logo {
-    background: #5C1355;
+    /* background: #5C1355; */
     text-align: center;
     float: left;
 }
