@@ -12,5 +12,7 @@ class balances extends Model
      *
      * @var array
      */
-   
+    public function users(){
+    	return $this->belongsTo('App\users', 'user');
+    }
 }
