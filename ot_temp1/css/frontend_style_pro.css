@@ -61,7 +61,8 @@
 }
 
 .text-primary {
-    color: #5349fa !important
+    /* color: #5349fa !important */
+    color:#5C1355 !important
 }
 
 .bg-primary {
