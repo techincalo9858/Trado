@@ -12,10 +12,11 @@
 }
 
 .navbar.alt-color {
-    background: -webkit-gradient(linear, left top, right bottom, from(#2998ff), to(#5643fa));
+    /* background: -webkit-gradient(linear, left top, right bottom, from(#2998ff), to(#5643fa));
     background: -webkit-linear-gradient(top left, #2998ff, #5643fa);
     background: -o-linear-gradient(top left, #2998ff, #5643fa);
-    background: linear-gradient(to bottom right, #2998ff, #5643fa);
+    background: linear-gradient(to bottom right, #2998ff, #5643fa); */
+    background: linear-gradient(to bottom right, #5C1355, #BD7F9E)!important;
     -webkit-box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.3) !important;
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.3) !important;
     -webkit-transition: ease-in-out !important;
