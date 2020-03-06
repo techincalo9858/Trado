@@ -42,6 +42,10 @@ body a {
     background: linear-gradient(to bottom right, #5C1355, #BD7F9E)!important;
     border-color: #f5f5dc00!important;
 }
+.bg-primary{
+    background: linear-gradient(to bottom,rgba(0,0,0,0.4),rgba(0,0,0,0))!important;
+}
+
 
 @media(max-width:768px) {
     .t-b {
