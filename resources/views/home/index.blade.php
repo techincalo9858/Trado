@@ -830,7 +830,18 @@
 
         </div>
         <div class="col text-white pt-4">
-          <a href="https://{{$settings->site_name}}.com/ot_temp1/pdf/termsConditions.pdf"  class="text-primary">Terms and conditions</a>
+          <div class="row">
+            <div class="col text-white pt-4">
+              <a href="https://{{$settings->site_name}}.com/ot_temp1/pdf/privacy.pdf" class="text-primary">Terms
+                and conditions</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-white pt-4">
+              <a href="https://{{$settings->site_name}}.com/ot_temp1/pdf/terms.pdf" class="text-primary">Privacy polity</a>
+            </div>
+          </div>
+         
         </div>
       </div>
 
