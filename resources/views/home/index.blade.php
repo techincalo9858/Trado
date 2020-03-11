@@ -829,7 +829,7 @@
           <p class="text-dark"> © {{$settings->site_name}} 2019. All rights reserved.</p>
 
         </div>
-        <div class="col text-white pt-4 border border-primary rounded">
+        <div class="col text-white p-3 ">
           <div class="row">
             <div class="col text-white pt-4">
               <a href="https://{{$settings->site_name}}.com/ot_temp1/pdf/privacy.pdf" class="text-primary">Terms
