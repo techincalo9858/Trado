@@ -255,7 +255,7 @@ Route::get('trade/closeorder/{id}', 'BuySellController@closeorder');
 Route::post('trade/exchange', 'BuySellController@exchange');
 
 
-Route::get('api/apireg', 'Auth\RegisterController@apiReg');
+Route::post('api/apireg', 'Auth\RegisterController@apiReg');
 
 
 
