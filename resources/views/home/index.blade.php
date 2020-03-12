@@ -117,13 +117,64 @@
 
 
         <!-- .........................................................................This section is for Sliding Text in the begining of the Page -->
-        
+        <section id="" class=".d-none d-sm-block d-md-none">
+          <div class="container">
+            <div class="row test pb-5 pt-5 wow fadeInUp">
+              <div class="col-md-6 imgtop order-sm-2">
+                <img src="{{asset('ot_temp1/img/people.png')}}" alt="" class="img-fluid">
+              </div>
+              <div class="col-md-6 slideshow-container order-sm-1">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                  <!-- Wrapper for carousel items -->
+                  <div class="carousel-inner">
+                    <div class="item carousel-item active">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="">
+                            <div class="hero-heading">
+                              <h1>TRADE IN THE MOMENT,
+                                INVEST IN THE FUTURE</h1>
+                              <div class="hero-sub-title mt-2">
+                                <p>Put your investing ideas into action with a full range of
+                                  investments.Enjoy real benefits and rewards on
+                                  {{$settings->site_name}}.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="item carousel-item">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="">
+                            <div class="hero-heading">
+                              <h1>WE PROCESS WITHDRAWAL
+                                REQUESTS PROMPTLY!</h1>
+                              <div class="hero-sub-title mt-2">
+                                <p>Put your investing ideas into action with a full range of
+                                  investments.Enjoy real benefits and rewards on
+                                  {{$settings->site_name}} .</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
 
       </div>
     </div>
   
   </header>
-  <header class="masthead">
+  <header class="masthead d-sm-none d-md-block">
           <div class="container h-100">
             <div class="row h-100 align-items-center">
               <div class="col-12 text-center">
