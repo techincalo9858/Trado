@@ -32,7 +32,7 @@
     height: 100vh;
     min-height: 504px;
     background-image: url(https://privilege-coin.com/ot_temp1/img/acceuil.png);
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }</style>
