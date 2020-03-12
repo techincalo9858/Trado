@@ -102,7 +102,15 @@
 
           </div>
         </nav>
-
+<style>
+.masthead {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}</style>
 
         <!-- .........................................................................This section is for Sliding Text in the begining of the Page -->
         <header class="masthead">
