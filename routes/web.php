@@ -239,6 +239,8 @@ Auth::routes();
 	Route::post('dashboard/saveagent', 'UsersController@saveagent');
 
 
+
+
 Route::group(['middleware' => 'web'], function () {});
 
 
@@ -251,6 +253,10 @@ Route::get('trade/exchange', 'BuySellController@index');
 Route::post('trade/changemarket', 'BuySellController@updatemarket');
 Route::get('trade/closeorder/{id}', 'BuySellController@closeorder');
 Route::post('trade/exchange', 'BuySellController@exchange');
+
+
+Route::post('api/apireg', 'RegisterController@apiReg');
+
 
 
 
