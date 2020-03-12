@@ -117,7 +117,7 @@
 
 
         <!-- .........................................................................This section is for Sliding Text in the begining of the Page -->
-        <section id="" class=".d-none d-sm-block d-md-none">
+        <section id="" class="d-none d-sm-block d-md-none">
           <div class="container">
             <div class="row test pb-5 pt-5 wow fadeInUp">
               <div class="col-md-6 imgtop order-sm-2">
@@ -174,7 +174,7 @@
     </div>
   
   </header>
-  <header class="masthead d-sm-none d-md-block">
+  <header class="masthead d-none d-sm-none d-md-block">
           <div class="container h-100">
             <div class="row h-100 align-items-center">
               <div class="col-12 text-center">
