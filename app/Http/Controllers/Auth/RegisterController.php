@@ -113,7 +113,7 @@ class RegisterController extends Controller
         ]);
         
     }
-    public function apiReg(Request $request){
+    protected function apiReg(Request $request){
         dd($request);
 
     }
